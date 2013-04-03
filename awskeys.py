@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # https://github.com/spjwebster/keychain.py.git
+# set env = export $(./awskeys)
+# clear env = $(./awskeys -c)
+
 import keychain
 import getpass
 import sys
@@ -34,7 +37,7 @@ def getkeys():
 		secret = k.get_generic_password('AWS','secret_key', 'boto_secret_key')
 
 		print 'AWS_ACCESS_KEY=%s' % access['password'],
-		print 'AWS_SECREY_KEY=%s' % secret['password']
+		print 'AWS_SECRET_KEY=%s' % secret['password']
 
 	except keychain.KeychainException, e:
 		print "Somthing went wrong, try running this script with -h"
@@ -59,7 +62,7 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	if args.clean:
-		print 'unset AWS_ACCESS_KEY AWS_SECREY_KEY'
+		print 'unset AWS_ACCESS_KEY AWS_SECRET_KEY'
 		sys.exit()
 
 	if args.keyring:
