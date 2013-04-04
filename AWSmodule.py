@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 import os
+import datetime
 import boto
 from boto.ec2.connection import EC2Connection
 
 access_key = os.environ.get('AWS_ACCESS_KEY')
 secret_key = os.environ.get('AWS_SECRET_KEY')
+
+def roundTime(dt=None, roundTo=60):
+   if dt == None : dt = datetime.datetime.now()
+   seconds = (dt - dt.min).seconds
+   rounding = (seconds+roundTo/2) // roundTo * roundTo
+   return dt + datetime.timedelta(0,rounding-seconds,-dt.microsecond)
 
 class AWSInst:
 
@@ -54,5 +61,20 @@ class AWSInst:
 			print i
 
 
-x = AWSInst('sa-east-1')
-x.start_servers('0900')
+if __name__ == "__main__":
+	sa_inst = AWSInst('sa-east-1')
+	nv_inst = AWSInst('us-east-1')
+	requestminutes=60
+
+	now = roundTime(datetime.datetime.now(), roundTo=requestminutes*15)
+	strtime = now.strftime('%H%M')
+	print strtime
+
+	noon = now.replace(hour=12)
+	if now > noon:
+		sa_inst.stop_servers(strtime)
+		nv_inst.stop_servers(strtime)
+
+	#else:
+	#   sa_inst.stop_servers(strtime)
+	#   nv_inst.stop_servers(strtime)
