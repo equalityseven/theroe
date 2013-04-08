@@ -43,7 +43,7 @@ class AWSInst:
 		return instances
 
 
-	def start_servers(self, time):
+	def start_instances(self, time):
 		self.filters = {'tag:StartTime' : time}
 	
 		for i in self._get_instances():
@@ -52,7 +52,7 @@ class AWSInst:
 			# Print i.name or whatever for testing
 			print i
 
-	def stop_servers(self, time):
+	def stop_instances(self, time):
 		self.filters = {'tag:StopTime' : time}
 	
 		for i in self._get_instances():
@@ -81,9 +81,9 @@ if __name__ == "__main__":
 
 	noon = now.replace(hour=12)
 	if now > noon:
-		sa_inst.stop_servers(strtime)
-		nv_inst.stop_servers(strtime)
+		sa_inst.stop_instances(strtime)
+		nv_inst.stop_instances(strtime)
 
 	#else:
-	#   sa_inst.stop_servers(strtime)
-	#   nv_inst.stop_servers(strtime)
+	#   sa_inst.stop_instances(strtime)
+	#   nv_inst.stop_instances(strtime)
