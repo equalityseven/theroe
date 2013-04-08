@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head lang="en">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<script src="static/angular/angular.min.js"></script>
+		<script src="static/app.js"></script>
+	</head>
+	<body ng-controller="MainCtrl">
+		<table>
+			<tr> <th>Instance Name</th>  <th>State</th> </tr>
+		{% for i in instances %}
+			<tr> 
+				<td>{{ i.tags['Name'] }}</td> 
+				{{chuck}}
+				<td><button ng-click='stop_instance_by_id("{{i.id}}")' >{{ i.state }}</button></td> 
+			</tr>
+		{% endfor %}
+		</table>
+	
+	</body>
+</html>
+
+
+
