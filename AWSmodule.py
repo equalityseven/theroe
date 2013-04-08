@@ -10,7 +10,7 @@ secret_key = os.environ.get('AWS_SECRET_KEY')
 def roundTime(dt=None, roundTo=60):
    if dt == None : dt = datetime.datetime.now()
    seconds = (dt - dt.min).seconds
-   rounding = (seconds+roundTo/2) // roundTo * roundTo
+   rounding = (seconds+roundTo / 2) / roundTo * roundTo
    return dt + datetime.timedelta(0,rounding-seconds,-dt.microsecond)
 
 class AWSInst:
@@ -34,6 +34,7 @@ class AWSInst:
 		instances = []
 		filters = {'tag:Managed': 'True'}
 		filters.update(self.filters)
+		self.filters = {}
 		
 		for reservation in self.conn.get_all_instances(filters=filters):
 			for instance in reservation.instances:
@@ -61,14 +62,22 @@ class AWSInst:
 			print i
 
 
+	def get_instance_by_id(self, id):
+		self.filters = {'instance-id' : id}
+		return self._get_instances()[0]
+	
+
+	def all_instances(self):
+		return self._get_instances()
+
+
 if __name__ == "__main__":
 	sa_inst = AWSInst('sa-east-1')
 	nv_inst = AWSInst('us-east-1')
-	requestminutes=60
+	requestminutes = 60
 
 	now = roundTime(datetime.datetime.now(), roundTo=requestminutes*15)
 	strtime = now.strftime('%H%M')
-	print strtime
 
 	noon = now.replace(hour=12)
 	if now > noon:

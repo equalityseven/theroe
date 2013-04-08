@@ -13,7 +13,6 @@
 		{% for i in instances %}
 			<tr> 
 				<td>{{ i.tags['Name'] }}</td> 
-				{{chuck}}
 				<td><button ng-click='stop_instance_by_id("{{i.id}}")' >{{ i.state }}</button></td> 
 			</tr>
 		{% endfor %}
