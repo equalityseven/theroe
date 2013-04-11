@@ -47,19 +47,15 @@ class AWSInst:
 		self.filters = {'tag:StartTime' : time}
 	
 		for i in self._get_instances():
-			#i.add_tag('StartTime', i.tags['Default_StarTime'])
-			#i.start()
-			# Print i.name or whatever for testing
-			print i
+			i.add_tag('StartTime', i.tags['Default_StarTime'])
+			i.start()
 
 	def stop_instances(self, time):
 		self.filters = {'tag:StopTime' : time}
 	
 		for i in self._get_instances():
-			#i.add_tag('StopTime', i.tags['Default_StopTime'])
-			#i.stop()
-			# Print i.name or whatever for testing
-			print i
+			i.add_tag('StopTime', i.tags['Default_StopTime'])
+			i.stop()
 
 
 	def get_instance_by_id(self, id):
